@@ -7,9 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:types":"supabase gen types typescript --project-id bjnguytaoxgyzdkdwlzd > types/supabase.ts"
+    "db:types": "supabase gen types typescript --project-id bjnguytaoxgyzdkdwlzd > types/supabase.ts"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.1.0",
     "@supabase/ssr": "^0.5.1",
     "@supabase/supabase-js": "^2.45.3",
     "class-variance-authority": "^0.7.0",
