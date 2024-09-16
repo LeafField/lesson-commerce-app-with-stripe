@@ -1,3 +1,4 @@
+import "server-only";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { Database } from "../../types/supabase";
@@ -19,8 +20,8 @@ export function createClient() {
               cookieStore.set(name, value, options),
             );
           } catch (error) {
-            console.error(error);
-            throw new Error("cookie setAll error");
+            console.log(error);
+            // throw new Error("cookie setAll error");
           }
         },
       },

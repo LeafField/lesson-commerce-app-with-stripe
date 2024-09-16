@@ -1,12 +1,12 @@
 "use client";
 import React, { FC, useCallback } from "react";
 import { Button } from "../ui/button";
-import { Session } from "@supabase/supabase-js";
+import { User } from "@supabase/supabase-js";
 import { createClient } from "../../app/client/supabase";
 import { useRouter } from "next/navigation";
 
 type Props = {
-  session: Session | null;
+  session: User | null;
 };
 
 const AuthClientButton: FC<Props> = ({ session }) => {

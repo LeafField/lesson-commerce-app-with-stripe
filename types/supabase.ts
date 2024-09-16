@@ -30,6 +30,38 @@ export type Database = {
         }
         Relationships: []
       }
+      profile: {
+        Row: {
+          created_at: string
+          id: string
+          interval: string | null
+          is_subscribed: boolean
+          stripe_costomer: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          interval?: string | null
+          is_subscribed?: boolean
+          stripe_costomer?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          interval?: string | null
+          is_subscribed?: boolean
+          stripe_costomer?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profile_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
