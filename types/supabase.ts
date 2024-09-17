@@ -30,9 +30,36 @@ export type Database = {
         }
         Relationships: []
       }
+      premium_content: {
+        Row: {
+          created_at: string
+          id: number
+          video_url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          video_url: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          video_url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "premium_content_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "lesson"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profile: {
         Row: {
           created_at: string
+          email: string | null
           id: string
           interval: string | null
           is_subscribed: boolean
@@ -40,6 +67,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          email?: string | null
           id?: string
           interval?: string | null
           is_subscribed?: boolean
@@ -47,6 +75,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          email?: string | null
           id?: string
           interval?: string | null
           is_subscribed?: boolean

@@ -10,6 +10,7 @@
     "db:types": "supabase gen types typescript --project-id bjnguytaoxgyzdkdwlzd > types/supabase.ts"
   },
   "dependencies": {
+    "@next/third-parties": "^14.2.11",
     "@radix-ui/react-slot": "^1.1.0",
     "@supabase/ssr": "^0.5.1",
     "@supabase/supabase-js": "^2.45.3",
