@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { createClient } from "../server/supabase";
 import { YouTubeEmbed } from "@next/third-parties/google";
-import { extractYouTubeVideoId } from "../../utils/extractYoutubeVideoId";
 
 const getDetailLesson = async (id: number) => {
   const supabase = createClient();
