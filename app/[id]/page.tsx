@@ -35,8 +35,11 @@ type Props = {
 };
 
 const LessonDetailPage: FC<Props> = async ({ params }) => {
-  const lesson = await getDetailLesson(params.id);
-  const video = await getPremiumContent(params.id);
+  const [] = await Promise.all([
+    await getDetailLesson(params.id),
+    await getPremiumContent(params.id),
+  ]);
+
   const videoId = new URL(video.video_url).searchParams.get("v");
   return (
     <div className="mx-auto w-full max-w-3xl px-8 py-16">
