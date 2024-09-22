@@ -35,7 +35,7 @@ type Props = {
 };
 
 const LessonDetailPage: FC<Props> = async ({ params }) => {
-  const [] = await Promise.all([
+  const [lesson, video] = await Promise.all([
     await getDetailLesson(params.id),
     await getPremiumContent(params.id),
   ]);
