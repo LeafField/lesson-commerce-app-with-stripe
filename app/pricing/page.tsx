@@ -8,14 +8,16 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
+import { createClient } from "../server/supabase";
+import SubscriptionButton from "../../components/checkout/SubscriptionButton";
 
-interface Plan {
-  id: string;
-  name: string;
-  price: string | null;
-  interval: Stripe.Plan.Interval | null;
-  currency: string;
-}
+// interface Plan {
+//   id: string;
+//   name: string;
+//   price: string | null;
+//   interval: Stripe.Plan.Interval | null;
+//   currency: string;
+// }
 
 const getAllPlans = async () => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -42,8 +44,22 @@ const getAllPlans = async () => {
   return sortedPlans;
 };
 
+const getProfileData = async () => {
+  const supabase = createClient();
+  const { data: profile } = await supabase.from("profile").select("*").single();
+  return profile;
+};
+
 const PricingPage = async () => {
-  const plans = await getAllPlans();
+  const [plans, profile] = await Promise.all([
+    await getAllPlans(),
+    await getProfileData(),
+  ]);
+  const supabase = createClient();
+  const { data: user } = await supabase.auth.getUser();
+  const showSubscribeButton = !!user.user && !profile?.is_subscribed;
+  const showCreateAccountButton = !user.user;
+  const showManageSubscription = !!user.user && profile?.is_subscribed;
 
   return (
     <div className="mx-auto flex w-full max-w-3xl justify-around py-16">
@@ -57,7 +73,11 @@ const PricingPage = async () => {
             {plan?.price}円/{plan?.interval}
           </CardContent>
           <CardFooter>
-            <Button>サブスクリプション契約する</Button>
+            {showSubscribeButton && <SubscriptionButton />}
+            {showCreateAccountButton && <Button>ログインする</Button>}
+            {showManageSubscription && (
+              <Button>サブスクリプション管理する</Button>
+            )}
           </CardFooter>
         </Card>
       ))}
