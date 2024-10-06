@@ -10,6 +10,7 @@ import {
 } from "../../components/ui/card";
 import { createClient } from "../server/supabase";
 import SubscriptionButton from "../../components/checkout/SubscriptionButton";
+import AuthServerButton from "../../components/auth/AuthServerButton";
 
 // interface Plan {
 //   id: string;
@@ -76,7 +77,7 @@ const PricingPage = async () => {
             {showSubscribeButton && plan && (
               <SubscriptionButton planid={plan?.id} />
             )}
-            {showCreateAccountButton && <Button>ログインする</Button>}
+            {showCreateAccountButton && <AuthServerButton />}
             {showManageSubscription && (
               <Button>サブスクリプション管理する</Button>
             )}
