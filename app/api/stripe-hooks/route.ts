@@ -33,11 +33,39 @@ export async function POST(req: NextRequest) {
         // Then define and call a method to handle the successful payment intent.
         // handlePaymentIntentSucceeded(paymentIntent);
         break;
-      case "payment_method.attached":
-        const paymentMethod = event.data.object;
+      case "customer.subscription.updated":
+        const costomerSubscriptionUpdate = event.data.object;
+        if (costomerSubscriptionUpdate.status === "canceled") {
+          await supabase
+            .from("profile")
+            .update({
+              interval: null,
+              is_subscribed: false,
+            })
+            .eq("stripe_costomer", event.data.object.customer);
+        } else {
+          await supabase
+            .from("profile")
+            .update({
+              interval: costomerSubscriptionUpdate.items.data[0].plan.interval,
+              is_subscribed: true,
+            })
+            .eq("stripe_costomer", event.data.object.customer);
+        }
+        break;
+
+      case "customer.subscription.deleted":
+        await supabase
+          .from("profile")
+          .update({
+            interval: null,
+            is_subscribed: false,
+          })
+          .eq("stripe_costomer", event.data.object.customer);
         // Then define and call a method to handle the successful attachment of a PaymentMethod.
         // handlePaymentMethodAttached(paymentMethod);
         break;
+
       default:
         // Unexpected event type
         console.log(`Unhandled event type ${event.type}.`);
